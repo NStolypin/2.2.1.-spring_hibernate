@@ -19,8 +19,8 @@ public class CarDaoImpl implements CarDAO {
     @Override
     public User getOwner(String model, int series) {
         Session session = sessionFactory.getCurrentSession();
-        Optional<Car> carO = session.createQuery("FROM Car WHERE model=:model", Car.class)
-                .setParameter("model", model).getResultList().stream().findAny();
+        Optional<Car> carO = session.createQuery("FROM Car WHERE model=:model AND series=:series", Car.class)
+                .setParameter("model", model).setParameter("series", series).getResultList().stream().findAny();
 
         return carO.isPresent() ? carO.get().getUser() : null;
     }
